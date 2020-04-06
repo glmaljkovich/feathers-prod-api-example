@@ -7,6 +7,20 @@ module.exports = app => {
 
   authentication.register('jwt', new JWTStrategy());
   authentication.register('local', new LocalStrategy());
+  authentication.docs = {
+    description: 'Get access tokens for users',
+    definitions: {
+      authentication: {
+        title: "Auth Payload",
+        required: ["strategy", "username", "password"],
+        properties: {
+          strategy: {type: "string", enum: ["local", "oauth"]},
+          username: {type: "string"},
+          password: {type: "string"}
+        }
+      }
+    }
+  }
 
   app.use('/authentication', authentication);
   app.configure(expressOauth());

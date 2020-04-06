@@ -2,12 +2,9 @@
 const { Dummy } = require('./dummies.class');
 const createModel = require('../../models/dummies.model');
 const hooks = require('./dummies.hooks');
+const {requestRef, responseRef} = require("../../utils/swagger");
 const m2s = require('mongoose-to-swagger');
-function removeIdAndRename(model, title){
-  model.title = title
-  delete model.properties._id;
-  return model
-}
+
 module.exports = function (app) {
   const model = createModel(app);
   const options = {
@@ -27,10 +24,14 @@ module.exports = function (app) {
           $ref: '#/definitions/dummy'
         }
       },
-      dummy_create: removeIdAndRename(m2s(model))
+      dummy_payload: {
+        title: "Dummy request payload",
+        required: ["text"],
+        properties: {text: {type: "string", example: "Nonsense"}}
+      }
     },
     refs: {
-      createRequest: "dummy_create"
+      ...requestRef(["CREATE", "UPDATE", "PATCH"], "dummy_payload")
     },
     operations: {
       remove: false

@@ -6,6 +6,7 @@
 
 This project uses [Feathers](http://feathersjs.com).
 It has examples on how to use `feathers-swagger` in `dummies.service` and `users.service`. It also shows how to disable rest methods from services with `feathers-hooks-commons` in `dummies.hooks`
+We also have `ReDoc` documentation at `/docs`
 
 ## Getting Started
 

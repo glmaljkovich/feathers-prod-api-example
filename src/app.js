@@ -46,6 +46,7 @@ app.use(morgan('dev'))
 
 // set up documentation
 app.configure(swagger({
+  docsPath: '/docs/swagger',
   uiIndex: true,
   specs: {
     info: {
@@ -55,6 +56,10 @@ app.configure(swagger({
     },
   }
 }));
+// redoc
+app.use("/docs", (req, res) => {
+  res.redirect("/docs.html")
+})
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
